@@ -17,7 +17,7 @@ const StockRecommendations: React.FC = () => {
 
     try {
       const response = await axios.get(
-        `https://finnhub.io/api/v1/stock/recommendation?symbol=${symbol}&token=cs8on8hr01qu0vk4gjggcs8on8hr01qu0vk4gjh0`
+        `https://finnhub.io/api/v1/stock/recommendation?symbol=${symbol}&token=FINNHUB_API_KEY`
       );
       if (response.data.length > 0) {
         setRecommendations(response.data[0]); // Display the latest recommendation
