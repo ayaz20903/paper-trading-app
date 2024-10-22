@@ -7,6 +7,10 @@
   --foreground: #171717;
 }
 
+body{
+  margin: 0 !important;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -24,4 +28,59 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.home-banner{
+  height: 90vh;
+  background-image: url(./images/home-banner-1.png);
+  background-size: cover;
+  background-position: center;
+}
+.home-banner-text{
+  transform: translate(-50%,-70%);
+  text-align: left;
+}
+
+.primary-button{
+  border: 1px solid #fff;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 0.25rem;
+  transition: all 0.4s;
+  position: relative;
+  cursor: pointer;
+}
+
+.primary-button:hover{
+  background: #ffffff;
+  border: 1px solid #ffffff;
+  color: #000000;
+}
+
+.secondary-button{
+  background: #ffffff;
+  border: 1px solid #ffffff;
+  color: #000000;
+  padding: 8px 16px;
+  border-radius: 0.25rem;
+  transition: all 0.4s;
+  cursor: pointer;
+}
+
+.secondary-button:hover{
+  background: #000000;
+  border: 1px solid #ffffff;
+  color: #ffffff;
+}
+
+.home-intro{
+  position: absolute;
+  bottom: -150%;
+  right: -100%;
+  width: 100%;
+  text-align: right;
+}
+
+.home-stock-table tbody tr:nth-last-child() {
+  border: none;
 }
