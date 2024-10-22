@@ -234,7 +234,7 @@ const Dashboard: React.FC = () => {
             {isModalOpen && stockToBuy && (
                 <Modal
                     stock={stockToBuy}
-                    onConfirm={handleConfirmBuy}
+                    onConfirmBuy={handleConfirmBuy}
                     onCancel={handleCancelBuy}
                     mode="buy"
                     currentQuantity={currentQuantity}

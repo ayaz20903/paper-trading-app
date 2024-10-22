@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 
 type ModalProps = {
     stock: any; // The stock being bought or sold
-    onConfirm?: (quantity: number) => void; // Confirm buy callback with quantity
+    onConfirmBuy?: (quantity: number) => void; // Confirm buy callback with quantity
     onCancel: () => void; // Cancel callback
     onConfirmSell?: (stock: any, quantity: number) => void; // Confirm sell callback
     mode: 'buy' | 'sell'; // To distinguish between buy and sell modal
     currentQuantity: number; // Current quantity for sell mode
 };
 
-const Modal: React.FC<ModalProps> = ({ stock, onConfirm, onCancel, onConfirmSell, mode, currentQuantity }) => {
+const Modal: React.FC<ModalProps> = ({ stock, onConfirmBuy, onCancel, onConfirmSell, mode, currentQuantity }) => {
     const [quantity, setQuantity] = useState<number>(1); // Initial quantity set to 1
 
     const handleIncrease = () => {
@@ -83,7 +83,7 @@ const Modal: React.FC<ModalProps> = ({ stock, onConfirm, onCancel, onConfirmSell
 
                             {mode === 'buy' ? (
                                 <button
-                                    onClick={() => onConfirm?.(quantity)} // Only for buying
+                                    onClick={() => onConfirmBuy?.(quantity)} // Only for buying
                                     className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md"
                                 >
                                     Confirm Purchase
