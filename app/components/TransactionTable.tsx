@@ -8,37 +8,46 @@ interface Transaction {
   date: string;
 }
 
-const transactions: Transaction[] = [
-  { type: 'Ethereum Purchased', amount: '0.0184 ETH', total: '$30', status: 'Pending', date: 'February 21, 2021' },
-  { type: 'Bitcoin Purchased', amount: '0.3 BTC', total: '$40', status: 'Done', date: 'February 18, 2021' },
-  // ... more transactions
-];
+interface TransactionTableProps {
+  transactions: Transaction[];
+}
 
-const TransactionTable = () => {
+const TransactionTable: React.FC<TransactionTableProps> = ({ transactions }) => {
   return (
-    <div className="overflow-x-auto">
-      <table className="table-auto w-full">
-        <thead>
-          <tr>
-            <th className="px-4 py-2">Type</th>
-            <th className="px-4 py-2">Amount</th>
-            <th className="px-4 py-2">Total</th>
-            <th className="px-4 py-2">Status</th>
-            <th className="px-4 py-2">Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          {transactions.map((transaction, index) => (
-            <tr key={index}>
-              <td className="border px-4 py-2">{transaction.type}</td>
-              <td className="border px-4 py-2">{transaction.amount}</td>
-              <td className="border px-4 py-2">{transaction.total}</td>
-              <td className="border px-4 py-2">{transaction.status}</td>
-              <td className="border px-4 py-2">{transaction.date}</td>
+    <div className="overflow-x-auto mt-6">
+      <h2 className="text-3xl mb-4">Recent Transactions</h2>
+      <div className="py-2 px-5  bg-[#131024] transaction-table rounded">
+        <table className="table-auto w-full">
+          <thead>
+            <tr className='border-b border-[#ffffff1a]'>
+              <th className="text-left py-3 text-gray-500">Transactions</th>
+              <th className="text-right px-4 py-3 text-gray-500">Amount</th>
+              <th className="text-right px-4 py-3 text-gray-500">Total</th>
+              <th className="text-right px-4 py-3 text-gray-500">Status</th>
+              <th className="text-right py-3 text-gray-500">Date</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {transactions.length === 0 ? (
+              <tr>
+                <td colSpan={5} className="text-center py-4">
+                  No recent transactions available.
+                </td>
+              </tr>
+            ) : (
+              transactions.map((transaction, index) => (
+                <tr key={index}>
+                  <td className="py-3">{transaction.type}</td>
+                  <td className="text-right px-4 py-3">{transaction.amount}</td>
+                  <td className="text-right px-4 py-3 text-gray-500">{transaction.total}</td>
+                  <td className="text-right px-4 py-3">{transaction.status}</td>
+                  <td className="text-right py- text-gray-500">{transaction.date}</td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

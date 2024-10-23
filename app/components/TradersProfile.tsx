@@ -1,11 +1,13 @@
 type TradersProfileProps = {
     boughtAssets?: { symbol: string; price: number ; totalPrice:number; quantity:number }[]; // New prop for bought assets
-    totalPrice: number
+    totalPrice: number;
+    clearAssets:() => void;
 };
 
-const TradersProfile: React.FC<TradersProfileProps> = ({ boughtAssets, totalPrice }) => {
+const TradersProfile: React.FC<TradersProfileProps> = ({ boughtAssets, totalPrice, clearAssets }) => {
+   
     return (
-        <div className="traders-profile">
+        <div className="traders-profile h-full">
             <h2>Trader's Profile</h2>
 
             <div>
@@ -25,6 +27,7 @@ const TradersProfile: React.FC<TradersProfileProps> = ({ boughtAssets, totalPric
                     </ul>
                 </div>
             )}
+            <button onClick={(clearAssets)}>Clear Assets</button>
         </div>
     );
 };

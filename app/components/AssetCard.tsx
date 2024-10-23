@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import Modal from '@/app/components/Modal';
+import Image from 'next/image'
+import chart from "../images/Chart.png"
 
 type AssetCardProps = {
   onConfirmSell: (stock: any, quantity: number) => void; // Confirm sell callback
@@ -17,7 +19,6 @@ const AssetCard: React.FC<AssetCardProps> = ({ boughtAssets, onConfirmSell }) =>
       const assets = JSON.parse(storedBoughtAssets);
       const asset = assets.find((item: any) => item.symbol === symbol);
       if (asset) {
-        // Simulate fetching stock data (replace this with your actual stock data fetching logic)
         const stockData = {
           symbol: asset.symbol,
           data: {
@@ -41,7 +42,7 @@ const AssetCard: React.FC<AssetCardProps> = ({ boughtAssets, onConfirmSell }) =>
     if (storedBoughtAssets) {
       const assets = JSON.parse(storedBoughtAssets);
       const assetIndex = assets.findIndex((item: any) => item.symbol === stock.symbol);
-      
+
       if (assetIndex !== -1) {
         const updatedAssets = [...assets];
         const updatedAsset = { ...updatedAssets[assetIndex] };
@@ -62,20 +63,42 @@ const AssetCard: React.FC<AssetCardProps> = ({ boughtAssets, onConfirmSell }) =>
   };
 
   return (
-    <div className="asset-card">
-      <h2>Assets</h2>
+    <div className="">
+      <h2 className='text-3xl'>Assets</h2>
       {boughtAssets && boughtAssets.length > 0 && (
-        <div>
+        <div className='my-6'>
           <ul className="flex align-center justify-start flex-wrap">
             {boughtAssets.map(asset => (
               <li key={asset.symbol} className="mr-3 mb-3">
-                <h3 className="text-xl font-bold">{asset.symbol}</h3>
-                <div className="bg-white rounded-lg shadow-md p-6">
-                  <p className="text-3xl font-extrabold">${asset.totalPrice}</p>
+                <h3 className="font-bold text-sm mb-4">{asset.symbol}</h3>
+                <div className="bg-white rounded-lg shadow-md p-4 asset-card">
+                  <div className='flex items-center justify-center relative'>
+                    <p className='absolute top-[-10px] left-0 '>$</p>
+                    <p className="text-3xl font-extrabold mr-6">{asset.totalPrice}</p>
+                    <Image
+                      src={chart}
+                      width={100}
+                      height={100}
+                      alt="Picture of the author"
+                    />
+                  </div>
+                  <div className="flex justify-between mt-4">
+                    <div className="flex items-center">
+                    <p className="text-green-500">+</p>
+                      <p className="text-green-500 ml-2">2.67%</p>
+                    </div>
+                    <div className="flex items-center">
+                    <p className="text-red-500">-</p>
+                      <p className="text-red-500 ml-2">0.17%</p>
+                    </div>
+                    <div className="flex items-center">
+                      <p className="text-gray-500 ml-2">2.70%</p>
+                    </div>
+                  </div>
                   <div className="flex justify-between mt-4">
                     <button
                       onClick={() => handleSellClick(asset.symbol)}
-                      className="bg-green-500 text-white p-2 rounded-md w-[75px]"
+                      className="bg-green-500 text-white p-2 rounded-md w-full"
                     >
                       Sell
                     </button>

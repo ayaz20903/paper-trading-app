@@ -81,6 +81,18 @@ body {
   text-align: right;
 }
 
+
 .home-stock-table tbody tr:nth-last-child() {
   border: none;
+}
+
+.asset-card{
+  background: #131024;
+  border: 1px solid #ffffff1a;
+}
+
+.transaction-table{
+  background-image: url(./images/transaction-bg.png);
+  background-size: cover;
+  background-position: center;
 }

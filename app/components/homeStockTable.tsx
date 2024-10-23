@@ -18,7 +18,7 @@ const HomeStockTable: React.FC<DashboardProps> = ({ stockData }) => {
     };
 
     return (
-            <div className="w-[90%] mx-auto p-20 container">
+            <div className="w-[90%] mx-auto px-20 py-10 mt-10 container bg-[#13102478] border border-[#ffffff1a] rounded">
                 {/* Search Bar */}
                 <div className="flex justify-center mb-4">
                     <input
@@ -35,30 +35,30 @@ const HomeStockTable: React.FC<DashboardProps> = ({ stockData }) => {
                     <table className="w-full home-stock-table">
                         <thead className="h-[70px]">
                             <tr>
-                                <th className="text-center text-sm font-bold">Asset</th>
+                                <th className="text-left text-sm font-bold">Asset</th>
                                 <th className="text-center text-sm font-bold">Daily Change %</th>
-                                <th className="text-center text-sm font-bold">Current Price</th>
-                                <th className="text-center text-sm font-bold">High Price</th>
-                                <th className="text-center text-sm font-bold">Low Price</th>
+                                <th className="text-right text-sm font-bold">Current Price</th>
+                                <th className="text-right text-sm font-bold">High Price</th>
+                                <th className="text-right text-sm font-bold">Low Price</th>
                             </tr>
                         </thead>
                         <tbody>
                             {filteredStockData.length > 0 ? (
                                 filteredStockData.map((stock, index) => (
                                     <tr key={index} className='border-b border-white last:border-none'>
-                                        <td className=" py-[15px]  text-center text-sm font-medium">
+                                        <td className=" py-[15px]  text-left text-sm font-medium">
                                             {stock.symbol}
                                         </td>
                                         <td className=" py-[15px] border-white text-center text-sm font-medium">
                                             {stock.data.dp.toFixed(2)}%
                                         </td>
-                                        <td className=" py-[15px] border-white text-center text-sm font-medium">
+                                        <td className=" py-[15px] border-white text-right text-sm font-medium">
                                             ${stock.data.c}
                                         </td>
-                                        <td className=" py-[15px] border-white text-center text-sm font-medium">
+                                        <td className=" py-[15px] border-white text-right text-sm font-medium">
                                             ${stock.data.h}
                                         </td>
-                                        <td className=" py-[15px] border-white text-center text-sm font-medium">
+                                        <td className=" py-[15px] border-white text-right text-sm font-medium">
                                             ${stock.data.l}
                                         </td>
                                     </tr>

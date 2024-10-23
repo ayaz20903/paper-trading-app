@@ -4,6 +4,7 @@ import AssetCard from '@/app/components/AssetCard';
 import StockRecommendations from '@/app/components/StockRecommendations';
 import TradersProfile from '@/app/components/TradersProfile';
 import Modal from '@/app/components/Modal'; // Import the Modal component
+import TransactionTable from '@/app/components/TransactionTable';
 
 const Dashboard: React.FC = () => {
     const [inputValue, setInputValue] = useState<string>('');
@@ -15,13 +16,17 @@ const Dashboard: React.FC = () => {
     const [isSellModalOpen, setIsSellModalOpen] = useState<boolean>(false); // Sell modal visibility
     const [stockToSell, setStockToSell] = useState<any | null>(null); // Stock to be sold
     const [currentQuantity, setCurrentQuantity] = useState<number>(0); // To hold the current quantity for selling
-
+    const [transactions, setTransactions] = useState<any[]>([]); // Add transactions state
 
     // getting initial data from localstorage
     useEffect(() => {
         const storedBoughtAssets = localStorage.getItem('boughtStocks');
         if (storedBoughtAssets) {
             setBoughtAssets(JSON.parse(storedBoughtAssets));
+        }
+        const storedTransactions = localStorage.getItem('transactions');
+        if (storedTransactions) {
+            setTransactions(JSON.parse(storedTransactions).slice(0, 3)); // Limit to 3 recent transactions
         }
     }, []);
 
@@ -70,29 +75,20 @@ const Dashboard: React.FC = () => {
     // checks localstorage if the stock is availabe if yes  add 
     const handleConfirmBuy = (quantity: number) => {
         if (stockToBuy) {
-
-            // checks localstorage is availabe 
             const storedBoughtAssets = localStorage.getItem('boughtStocks');
             let updatedBoughtAssets = [];
 
-
             if (storedBoughtAssets) {
                 const boughtStocks = JSON.parse(storedBoughtAssets);
-
-                // if localstorage has data check if the stock is already purchased
                 const existingStockIndex = boughtStocks.findIndex((stock: any) => stock.symbol === stockToBuy.symbol);
 
-                // if yes update the buy quantity and update
                 if (existingStockIndex !== -1) {
                     const existingStock = boughtStocks[existingStockIndex];
                     const updatedStock = {
                         ...existingStock,
                         quantity: existingStock.quantity + quantity,
-                        totalPrice: (
-                            parseFloat(existingStock.totalPrice) + (stockToBuy.data.c * quantity)
-                        ).toFixed(2),
+                        totalPrice: (parseFloat(existingStock.totalPrice) + stockToBuy.data.c * quantity).toFixed(2),
                     };
-
                     boughtStocks[existingStockIndex] = updatedStock;
                 } else {
                     const newStock = {
@@ -103,7 +99,6 @@ const Dashboard: React.FC = () => {
                     };
                     boughtStocks.push(newStock);
                 }
-
                 updatedBoughtAssets = boughtStocks;
             } else {
                 const newStock = {
@@ -114,9 +109,21 @@ const Dashboard: React.FC = () => {
                 };
                 updatedBoughtAssets = [newStock];
             }
-
             setBoughtAssets(updatedBoughtAssets);
             localStorage.setItem('boughtStocks', JSON.stringify(updatedBoughtAssets));
+
+            // Update transactions
+            const newTransaction = {
+                type: `${stockToBuy.symbol} Purchased`,
+                amount: `${quantity} ${stockToBuy.symbol}`,
+                total: `$${(stockToBuy.data.c * quantity).toFixed(2)}`,
+                status: 'Done',
+                date: new Date().toLocaleString(),
+            };
+
+            const updatedTransactions = [newTransaction, ...transactions].slice(0, 3); // Store only last 3
+            setTransactions(updatedTransactions);
+            localStorage.setItem('transactions', JSON.stringify(updatedTransactions));
 
             setIsModalOpen(false);
             setStockToBuy(null);
@@ -132,7 +139,6 @@ const Dashboard: React.FC = () => {
         setIsModalOpen(false);
         setStockToSell(null);
     };
-
 
     const handleConfirmSell = (stock: any, quantity: number) => {
         const updatedBoughtAssets = boughtAssets.reduce((acc, asset) => {
@@ -150,21 +156,43 @@ const Dashboard: React.FC = () => {
             }
             acc.push(asset);
             return acc;
+
         }, [] as any[]);
 
         setBoughtAssets(updatedBoughtAssets);
         localStorage.setItem('boughtStocks', JSON.stringify(updatedBoughtAssets));
-        
+
+        // new sell transaction
+        const newTransaction = {
+            type: `${stock.symbol} Sold`,
+            amount: `${quantity} ${stock.symbol}`,
+            total: `$${(stock.data.c * quantity).toFixed(2)}`, // Calculate total sell price
+            status: 'Completed', // You can adjust this based on logic if needed
+            date: new Date().toLocaleDateString(), // Add the current date
+        };
+
+        // Store the transaction in localStorage and state
+        const updatedTransactions = [newTransaction, ...transactions].slice(0, 3); // Store only last 3
+        setTransactions(updatedTransactions);
+        localStorage.setItem('transactions', JSON.stringify(updatedTransactions));
+
         // Close the sell modal
         setIsSellModalOpen(false);
         setStockToSell(null);
     };
 
+    const handleClearBoughtStocks = () => {
+        localStorage.removeItem('boughtStocks');
+        localStorage.removeItem('transactions');
+        setBoughtAssets([]);
+        setTransactions([]);
+    };
+
     return (
         <RootLayout>
-            <section className='flex'>
+            <section className='flex bg-[#0B091A]'>
                 <div className="p-4 w-4/5">
-                    <h1>Dashboard</h1>
+                    <h2 className='mb-1'>Dashboard</h2>
 
                     <form onSubmit={(e) => e.preventDefault()} className="mb-4">
                         <input
@@ -224,9 +252,10 @@ const Dashboard: React.FC = () => {
                     ))}
 
                     <AssetCard onConfirmSell={handleConfirmSell} boughtAssets={boughtAssets} />
+                    <TransactionTable transactions={transactions} />
                 </div>
-                <div className="container mx-auto px-4 py-8 w-1/5">
-                    <TradersProfile boughtAssets={boughtAssets} totalPrice={totalPrice} />
+                <div className="container mx-auto px-4 py-8 w-1/5 bg-[#131024] border-s border-[#ffffff1a]">
+                    <TradersProfile clearAssets={handleClearBoughtStocks} boughtAssets={boughtAssets} totalPrice={totalPrice} />
                 </div>
             </section>
 

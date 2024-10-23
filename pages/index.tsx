@@ -39,7 +39,7 @@ export default function Home() {
 
   return (
 
-    <main>
+    <main className='bg-black'>
       <RootLayout>
       <div className="bg-cover bg-center h-96 flex items-center justify-center home-banner">
         <div className="p-8 text-center home-banner-text">
