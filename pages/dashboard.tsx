@@ -200,7 +200,7 @@ const Dashboard: React.FC = () => {
                             value={inputValue}
                             onChange={handleInputChange}
                             placeholder="Enter stock symbol (e.g., AAPL)"
-                            className="border rounded p-2"
+                            className="border rounded p-2 text-black"
                         />
                     </form>
 
@@ -221,7 +221,7 @@ const Dashboard: React.FC = () => {
                     )}
 
                     {selectedStocks.map((stock) => (
-                        <div key={stock.symbol} className="mt-4 p-4 border border-gray-300 rounded">
+                        <div key={stock.symbol} className="mt-4 p-4 border border-[#ffffff1a] rounded">
                             <h3 className="text-lg font-bold">{stock.symbol}</h3>
                             <div className='flex items-center justify-between mb-1'>
                                 <p><strong>Current: </strong> ${stock.data.c}</p>
@@ -241,12 +241,12 @@ const Dashboard: React.FC = () => {
                                 >
                                     Buy
                                 </button>
-                                <button
+                                {/* <button
                                     onClick={() => handleSellClick(stock)} // Open modal for selling
                                     className="bg-yellow-500 text-white p-2 rounded-md w-[75px]"
                                 >
                                     Sell
-                                </button>
+                                </button> */}
                             </div>
                         </div>
                     ))}
@@ -254,7 +254,7 @@ const Dashboard: React.FC = () => {
                     <AssetCard onConfirmSell={handleConfirmSell} boughtAssets={boughtAssets} />
                     <TransactionTable transactions={transactions} />
                 </div>
-                <div className="container mx-auto px-4 py-8 w-1/5 bg-[#131024] border-s border-[#ffffff1a]">
+                <div className="container mx-auto px-4 py-8 w-1/5 bg-[#131024] border-s border-[#ffffff1a] sticky top-0">
                     <TradersProfile clearAssets={handleClearBoughtStocks} boughtAssets={boughtAssets} totalPrice={totalPrice} />
                 </div>
             </section>

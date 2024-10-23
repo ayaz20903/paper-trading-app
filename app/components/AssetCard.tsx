@@ -64,7 +64,7 @@ const AssetCard: React.FC<AssetCardProps> = ({ boughtAssets, onConfirmSell }) =>
 
   return (
     <div className="">
-      <h2 className='text-3xl'>Assets</h2>
+      <h2 className='text-3xl mt-3'>Assets</h2>
       {boughtAssets && boughtAssets.length > 0 && (
         <div className='my-6'>
           <ul className="flex align-center justify-start flex-wrap">
@@ -79,7 +79,7 @@ const AssetCard: React.FC<AssetCardProps> = ({ boughtAssets, onConfirmSell }) =>
                       src={chart}
                       width={100}
                       height={100}
-                      alt="Picture of the author"
+                      alt="chart picture"
                     />
                   </div>
                   <div className="flex justify-between mt-4">
