@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import RootLayout from '@/app/layout';
 import AssetCard from '@/app/components/AssetCard';
-import StockRecommendations from '@/app/components/StockRecommendations';
+// import StockRecommendations from '@/app/components/StockRecommendations';
 import TradersProfile from '@/app/components/TradersProfile';
 import Modal from '@/app/components/Modal'; // Import the Modal component
 import TransactionTable from '@/app/components/TransactionTable';
@@ -68,6 +68,7 @@ const Dashboard: React.FC = () => {
 
     // update stockToBuy and open modal
     const handleBuyClick = (stock: any) => {
+        console.log(stock)
         setStockToBuy(stock); // Store the stock to be bought
         setIsModalOpen(true); // Open the modal
     };
@@ -97,7 +98,7 @@ const Dashboard: React.FC = () => {
                         quantity: quantity,
                         totalPrice: (stockToBuy.data.c * quantity).toFixed(2),
                     };
-                    boughtStocks.push(newStock);
+                    boughtStocks.unshift(newStock);
                 }
                 updatedBoughtAssets = boughtStocks;
             } else {
@@ -167,8 +168,8 @@ const Dashboard: React.FC = () => {
             type: `${stock.symbol} Sold`,
             amount: `${quantity} ${stock.symbol}`,
             total: `$${(stock.data.c * quantity).toFixed(2)}`, // Calculate total sell price
-            status: 'Completed', // You can adjust this based on logic if needed
-            date: new Date().toLocaleDateString(), // Add the current date
+            status: 'Completed', 
+            date: new Date().toLocaleDateString(),
         };
 
         // Store the transaction in localStorage and state

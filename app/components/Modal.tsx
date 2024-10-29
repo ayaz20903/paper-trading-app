@@ -57,7 +57,7 @@ const Modal: React.FC<ModalProps> = ({ stock, onConfirmBuy, onCancel, onConfirmS
                                 >
                                     -
                                 </button>
-                                <span className="mx-4 text-lg">{quantity}</span>
+                                <span className="mx-4 text-lg text-black">{quantity}</span>
                                 <button
                                     onClick={handleIncrease}
                                     className="bg-gray-300 hover:bg-gray-400 text-gray-700 px-3 py-1 rounded-md"

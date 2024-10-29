@@ -8,7 +8,7 @@ const Navbar: React.FC = () => {
         {/* Left side: Logo, About Us, and Contact */}
         <div className="flex items-center space-x-8">
           <div className="text-white text-2xl font-bold">
-            <Link href="/">My Web App</Link>
+            <Link href="/">PTA</Link>
           </div>
           <ul className="flex space-x-4">
             <li>

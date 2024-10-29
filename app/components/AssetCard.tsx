@@ -55,7 +55,7 @@ const AssetCard: React.FC<AssetCardProps> = ({ boughtAssets, onConfirmSell }) =>
         }
 
         localStorage.setItem('boughtStocks', JSON.stringify(updatedAssets)); // Update local storage
-        onConfirmSell(stock, quantity); // Call the callback to update the parent component state
+        onConfirmSell(stock, quantity); 
       }
     }
     setIsModalOpen(false); // Close the modal after selling

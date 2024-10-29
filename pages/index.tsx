@@ -33,7 +33,7 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    console.log('Updated stock data:', stockData); // This will log whenever stockData changes
+    console.log('Updated stock data:', stockData); 
   }, [stockData]);
   
 
@@ -55,16 +55,6 @@ export default function Home() {
       </div>
       
         <HomeStockTable stockData={stockData}/>
-
-         {/* <header className="flex justify-between mb-8">
-                        <div className="flex items-center">
-                            <button className="bg-blue-500 text-white px-4 py-2 rounded">More Assets</button>
-                            <div className="ml-4">
-                                <img src="profile-image.jpg" alt="Profile" className="w-10 h-10 rounded-full" />
-                                <span className="ml-2">Han Ji Pyeong</span>
-                            </div>
-                        </div>
-                    </header> */}
         </RootLayout>
     </main>
 
